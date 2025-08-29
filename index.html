@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -81,6 +81,15 @@
       padding: 10px;
       margin-top: 30px;
     }
+    .btn-cancel {
+      margin-left: 10px;
+      background: red;
+      color: white;
+      border: none;
+      padding: 3px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -116,6 +125,7 @@
   <ul id="lista-carrinho"></ul>
   <p class="total">Total: R$ <span id="total">0.00</span></p>
   <button class="btn" onclick="finalizarPedido()">Finalizar Pedido</button>
+  <button class="btn" style="background:gray; margin-left:10px;" onclick="limparCarrinho()">🗑️ Limpar Carrinho</button>
 </section>
 
 <footer>
@@ -134,12 +144,25 @@
     atualizarCarrinho();
   }
 
+  function removerItem(index) {
+    total -= carrinho[index].preco;
+    carrinho.splice(index, 1);
+    atualizarCarrinho();
+  }
+
+  function limparCarrinho() {
+    carrinho = [];
+    total = 0;
+    atualizarCarrinho();
+  }
+
   function atualizarCarrinho() {
     const lista = document.getElementById("lista-carrinho");
     lista.innerHTML = "";
-    carrinho.forEach(item => {
+    carrinho.forEach((item, index) => {
       let li = document.createElement("li");
-      li.textContent = `${item.nome} - R$ ${item.preco.toFixed(2)}`;
+      li.innerHTML = `${item.nome} - R$ ${item.preco.toFixed(2)} 
+        <button class="btn-cancel" onclick="removerItem(${index})">❌ Cancelar</button>`;
       lista.appendChild(li);
     });
     document.getElementById("total").textContent = total.toFixed(2);
@@ -158,23 +181,20 @@
     });
     mensagem += `\n💰 Total: R$ ${total.toFixed(2)}`;
 
-    // Número de WhatsApp da lanchonete (coloque o seu número aqui no formato internacional, ex: 5511999999999)
-    let telefone = "5516992884135";
+    // Número da lanchonete (coloque aqui no formato internacional, ex: 5511999999999)
+    let telefone = "55116992884135";
     let url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
 
     // Tocar alerta sonoro
     document.getElementById("alerta").play();
 
-    // Redirecionar para WhatsApp
+    // Abrir WhatsApp
     window.open(url, "_blank");
 
     // Resetar carrinho
-    carrinho = [];
-    total = 0;
-    atualizarCarrinho();
+    limparCarrinho();
   }
 </script>
 
 </body>
 </html>
-
