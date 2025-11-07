@@ -26,11 +26,16 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
             background-color: var(--background-light);
+            overflow-x: hidden;
         }
 
         .container {
@@ -62,17 +67,18 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
             font-weight: 700;
         }
 
         .logo i {
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
         }
 
         .nav-links {
             display: flex;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
@@ -80,6 +86,7 @@
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
+            font-size: clamp(0.9rem, 2vw, 1rem);
         }
 
         .nav-links a:hover {
@@ -90,27 +97,72 @@
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--white);
+        }
+
+        /* Mobile Menu */
+        .mobile-nav {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: var(--primary-dark);
+            padding: 1rem;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .mobile-nav.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mobile-nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .mobile-nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         /* Hero Section */
         .hero {
-            padding: 160px 0 80px;
+            padding: clamp(120px, 15vw, 160px) 0 clamp(60px, 10vw, 80px);
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: var(--white);
             text-align: center;
+            margin-top: 70px;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: clamp(2rem, 8vw, 3rem);
             margin-bottom: 1rem;
             font-weight: 700;
+            line-height: 1.2;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             max-width: 700px;
             margin: 0 auto 2rem;
             opacity: 0.9;
+            line-height: 1.6;
         }
 
         .hero-buttons {
@@ -118,18 +170,23 @@
             gap: 1rem;
             justify-content: center;
             margin-top: 2rem;
+            flex-wrap: wrap;
         }
 
         .btn {
-            display: inline-block;
-            padding: 12px 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(10px, 3vw, 12px) clamp(20px, 4vw, 28px);
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
             cursor: pointer;
             border: none;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            text-align: center;
+            min-height: 50px;
         }
 
         .btn-primary {
@@ -154,41 +211,46 @@
 
         /* Features Section */
         .features {
-            padding: 80px 0;
+            padding: clamp(60px, 10vw, 80px) 0;
             background-color: var(--white);
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: clamp(2rem, 6vw, 3rem);
         }
 
         .section-title h2 {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
             color: var(--text-dark);
             margin-bottom: 1rem;
+            line-height: 1.2;
         }
 
         .section-title p {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
             color: var(--text-light);
             max-width: 700px;
             margin: 0 auto;
+            line-height: 1.6;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: clamp(1.5rem, 4vw, 2rem);
         }
 
         .feature-card {
             background: var(--white);
             border-radius: 12px;
-            padding: 2rem;
+            padding: clamp(1.5rem, 4vw, 2rem);
             box-shadow: var(--card-shadow);
             transition: var(--transition);
             text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .feature-card:hover {
@@ -197,51 +259,53 @@
         }
 
         .feature-icon {
-            width: 70px;
-            height: 70px;
+            width: clamp(60px, 10vw, 70px);
+            height: clamp(60px, 10vw, 70px);
             background: rgba(76, 175, 80, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
+            margin: 0 auto clamp(1rem, 3vw, 1.5rem);
         }
 
         .feature-icon i {
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
             color: var(--primary-color);
         }
 
         .feature-card h3 {
-            font-size: 1.4rem;
+            font-size: clamp(1.2rem, 3vw, 1.4rem);
             margin-bottom: 1rem;
             color: var(--text-dark);
+            line-height: 1.3;
         }
 
         .feature-card p {
             color: var(--text-light);
+            line-height: 1.6;
+            flex-grow: 1;
         }
 
         /* Screenshots Section */
         .screenshots {
-            padding: 80px 0;
+            padding: clamp(60px, 10vw, 80px) 0;
             background-color: var(--background-light);
         }
 
         .screenshots-container {
-            display: flex;
-            gap: 2rem;
-            overflow-x: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+            gap: clamp(1rem, 3vw, 2rem);
             padding: 1rem 0;
-            scrollbar-width: thin;
         }
 
         .screenshot {
-            min-width: 280px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--card-shadow);
             transition: var(--transition);
+            aspect-ratio: 9/16;
         }
 
         .screenshot:hover {
@@ -250,71 +314,74 @@
 
         .screenshot img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             display: block;
         }
 
         /* How It Works */
         .how-it-works {
-            padding: 80px 0;
+            padding: clamp(60px, 10vw, 80px) 0;
             background-color: var(--white);
         }
 
         .steps {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+            gap: clamp(1.5rem, 4vw, 2rem);
         }
 
         .step {
-            flex: 1;
-            min-width: 250px;
             text-align: center;
-            padding: 2rem 1rem;
+            padding: clamp(1.5rem, 4vw, 2rem) clamp(1rem, 3vw, 1rem);
         }
 
         .step-number {
-            width: 50px;
-            height: 50px;
+            width: clamp(45px, 8vw, 50px);
+            height: clamp(45px, 8vw, 50px);
             background: var(--primary-color);
             color: var(--white);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
             font-weight: 700;
-            margin: 0 auto 1.5rem;
+            margin: 0 auto clamp(1rem, 3vw, 1.5rem);
         }
 
         .step h3 {
             margin-bottom: 1rem;
             color: var(--text-dark);
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            line-height: 1.3;
         }
 
         .step p {
             color: var(--text-light);
+            line-height: 1.6;
         }
 
         /* Download Section */
         .download {
-            padding: 80px 0;
+            padding: clamp(60px, 10vw, 80px) 0;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: var(--white);
             text-align: center;
         }
 
         .download h2 {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
             margin-bottom: 1rem;
+            line-height: 1.2;
         }
 
         .download p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             max-width: 700px;
             margin: 0 auto 2rem;
             opacity: 0.9;
+            line-height: 1.6;
         }
 
         .download-buttons {
@@ -330,11 +397,13 @@
             gap: 10px;
             background: var(--white);
             color: var(--text-dark);
-            padding: 12px 24px;
+            padding: clamp(10px, 3vw, 12px) clamp(15px, 3vw, 24px);
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
+            min-width: min(200px, 100%);
+            justify-content: center;
         }
 
         .download-btn:hover {
@@ -343,26 +412,40 @@
         }
 
         .download-btn i {
-            font-size: 1.5rem;
+            font-size: clamp(1.3rem, 3vw, 1.5rem);
+        }
+
+        .download-btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .download-btn-text div:first-child {
+            font-size: clamp(0.7rem, 2vw, 0.8rem);
+        }
+
+        .download-btn-text div:last-child {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
         }
 
         /* Footer */
         footer {
             background-color: var(--text-dark);
             color: var(--white);
-            padding: 60px 0 20px;
+            padding: clamp(40px, 8vw, 60px) 0 20px;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+            gap: clamp(1.5rem, 4vw, 2rem);
             margin-bottom: 2rem;
         }
 
         .footer-column h3 {
             margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+            font-size: clamp(1.1rem, 2.5vw, 1.2rem);
         }
 
         .footer-links {
@@ -377,15 +460,21 @@
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             transition: var(--transition);
+            font-size: clamp(0.9rem, 2vw, 1rem);
         }
 
         .footer-links a:hover {
             color: var(--white);
         }
 
+        .footer-links i {
+            margin-right: 8px;
+            width: 16px;
+        }
+
         .social-links {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             margin-top: 1rem;
         }
 
@@ -393,8 +482,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: clamp(35px, 8vw, 40px);
+            height: clamp(35px, 8vw, 40px);
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             color: var(--white);
@@ -412,7 +501,51 @@
             padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+
+        /* Loading Animation */
+        .loading {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .loading.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
         }
 
         /* Responsive Design */
@@ -425,30 +558,17 @@
                 display: block;
             }
 
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
             .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
 
             .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .section-title h2 {
-                font-size: 2rem;
+                width: min(300px, 100%);
             }
 
             .steps {
-                flex-direction: column;
+                grid-template-columns: 1fr;
             }
 
             .download-buttons {
@@ -457,9 +577,56 @@
             }
 
             .download-btn {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
+                width: min(300px, 100%);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero {
+                padding: 100px 0 40px;
+            }
+
+            .features,
+            .screenshots,
+            .how-it-works,
+            .download {
+                padding: 40px 0;
+            }
+
+            .feature-card,
+            .step {
+                padding: 1.5rem 1rem;
+            }
+
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+
+        /* Landscape orientation for mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero {
+                padding: 100px 0 40px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 1rem;
             }
         }
     </style>
@@ -479,21 +646,33 @@
                     <a href="#how-it-works">Como Funciona</a>
                     <a href="#download">Download</a>
                 </div>
-                <div class="mobile-menu">
+                <button class="mobile-menu" aria-label="Abrir menu">
                     <i class="fas fa-bars"></i>
-                </div>
+                </button>
             </nav>
         </div>
     </header>
 
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="container">
+            <div class="mobile-nav-links">
+                <a href="#features">Funcionalidades</a>
+                <a href="#screenshots">Capturas</a>
+                <a href="#how-it-works">Como Funciona</a>
+                <a href="#download">Download</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Gestão Inteligente da Colheita de Cana</h1>
-            <p>O aplicativo que simplifica o cálculo de produtividade, perdas e eficiência na colheita mecanizada de cana-de-açúcar.</p>
+            <h1 class="loading">Gestão Inteligente da Colheita de Cana</h1>
+            <p class="loading">O aplicativo que simplifica o cálculo de produtividade, perdas e eficiência na colheita mecanizada de cana-de-açúcar.</p>
             <div class="hero-buttons">
-                <a href="#download" class="btn btn-primary">Baixar Agora</a>
-                <a href="#features" class="btn btn-secondary">Saiba Mais</a>
+                <a href="#download" class="btn btn-primary loading">Baixar Agora</a>
+                <a href="#features" class="btn btn-secondary loading">Saiba Mais</a>
             </div>
         </div>
     </section>
@@ -502,46 +681,46 @@
     <section id="features" class="features">
         <div class="container">
             <div class="section-title">
-                <h2>Funcionalidades Principais</h2>
-                <p>Ferramentas especializadas para otimizar sua operação de colheita</p>
+                <h2 class="loading">Funcionalidades Principais</h2>
+                <p class="loading">Ferramentas especializadas para otimizar sua operação de colheita</p>
             </div>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card loading">
                     <div class="feature-icon">
                         <i class="fas fa-calculator"></i>
                     </div>
                     <h3>Cálculo de Produtividade</h3>
                     <p>Calcule a produtividade por colhedora com base em tempos de transbordo e densidade de carga.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card loading">
                     <div class="feature-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h3>Análise de Perdas</h3>
                     <p>Identifique e classifique perdas na colheita com sugestões de correção específicas.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card loading">
                     <div class="feature-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
                     <h3>Eficiência Operacional</h3>
                     <p>Avalie o avanço do trator e a relação de patinagem para máxima eficiência.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card loading">
                     <div class="feature-icon">
                         <i class="fas fa-file-pdf"></i>
                     </div>
                     <h3>Relatórios em PDF</h3>
                     <p>Gere relatórios detalhados em PDF para análise e compartilhamento.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card loading">
                     <div class="feature-icon">
                         <i class="fas fa-language"></i>
                     </div>
                     <h3>Multi-idioma</h3>
                     <p>Disponível em Português, Inglês e Espanhol para operações internacionais.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card loading">
                     <div class="feature-icon">
                         <i class="fas fa-palette"></i>
                     </div>
@@ -556,24 +735,21 @@
     <section id="screenshots" class="screenshots">
         <div class="container">
             <div class="section-title">
-                <h2>Capturas do Aplicativo</h2>
-                <p>Conheça a interface intuitiva e moderna do Cana Descomplicada</p>
+                <h2 class="loading">Capturas do Aplicativo</h2>
+                <p class="loading">Conheça a interface intuitiva e moderna do Cana Descomplicada</p>
             </div>
             <div class="screenshots-container">
-                <div class="screenshot">
-                    <img src="https://via.placeholder.com/280x500/4CAF50/FFFFFF?text=Tela+Principal" alt="Tela Principal">
+                <div class="screenshot loading">
+                    <img src="https://via.placeholder.com/280x500/4CAF50/FFFFFF?text=Tela+Principal" alt="Tela Principal do Aplicativo">
                 </div>
-                <div class="screenshot">
+                <div class="screenshot loading">
                     <img src="https://via.placeholder.com/280x500/2196F3/FFFFFF?text=Produtividade" alt="Cálculo de Produtividade">
                 </div>
-                <div class="screenshot">
+                <div class="screenshot loading">
                     <img src="https://via.placeholder.com/280x500/FF9800/FFFFFF?text=Análise+Perdas" alt="Análise de Perdas">
                 </div>
-                <div class="screenshot">
+                <div class="screenshot loading">
                     <img src="https://via.placeholder.com/280x500/4CAF50/FFFFFF?text=Relatórios" alt="Relatórios PDF">
-                </div>
-                <div class="screenshot">
-                    <img src="https://via.placeholder.com/280x500/2196F3/FFFFFF?text=Configurações" alt="Configurações">
                 </div>
             </div>
         </div>
@@ -583,26 +759,26 @@
     <section id="how-it-works" class="how-it-works">
         <div class="container">
             <div class="section-title">
-                <h2>Como Funciona</h2>
-                <p>Quatro passos simples para otimizar sua colheita</p>
+                <h2 class="loading">Como Funciona</h2>
+                <p class="loading">Quatro passos simples para otimizar sua colheita</p>
             </div>
             <div class="steps">
-                <div class="step">
+                <div class="step loading">
                     <div class="step-number">1</div>
                     <h3>Coleta de Dados</h3>
                     <p>Insira os dados operacionais como tempos de transbordo, TCH e área amostrada.</p>
                 </div>
-                <div class="step">
+                <div class="step loading">
                     <div class="step-number">2</div>
                     <h3>Análise Automática</h3>
                     <p>O aplicativo processa os dados e calcula automaticamente a produtividade e perdas.</p>
                 </div>
-                <div class="step">
+                <div class="step loading">
                     <div class="step-number">3</div>
                     <h3>Identificação de Problemas</h3>
                     <p>Receba alertas quando as perdas estiverem acima da meta estabelecida.</p>
                 </div>
-                <div class="step">
+                <div class="step loading">
                     <div class="step-number">4</div>
                     <h3>Soluções Específicas</h3>
                     <p>Obtenha sugestões de correção baseadas no tipo de perda identificada.</p>
@@ -614,21 +790,21 @@
     <!-- Download Section -->
     <section id="download" class="download">
         <div class="container">
-            <h2>Baixe o Aplicativo</h2>
-            <p>Disponível para dispositivos Android. Otimize sua colheita agora mesmo!</p>
+            <h2 class="loading">Baixe o Aplicativo</h2>
+            <p class="loading">Disponível para dispositivos Android. Otimize sua colheita agora mesmo!</p>
             <div class="download-buttons">
-                <a href="#" class="download-btn">
+                <a href="#" class="download-btn loading">
                     <i class="fab fa-google-play"></i>
-                    <div>
-                        <div style="font-size: 0.8rem;">Disponível no</div>
-                        <div style="font-size: 1.1rem;">Google Play</div>
+                    <div class="download-btn-text">
+                        <div>Disponível no</div>
+                        <div>Google Play</div>
                     </div>
                 </a>
-                <a href="#" class="download-btn">
+                <a href="#" class="download-btn loading">
                     <i class="fas fa-download"></i>
-                    <div>
-                        <div style="font-size: 0.8rem;">Download</div>
-                        <div style="font-size: 1.1rem;">APK Directo</div>
+                    <div class="download-btn-text">
+                        <div>Download</div>
+                        <div>APK Directo</div>
                     </div>
                 </a>
             </div>
@@ -639,17 +815,17 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-column">
+                <div class="footer-column loading">
                     <h3>Cana Descomplicada</h3>
                     <p>O aplicativo definitivo para gestão inteligente da colheita de cana-de-açúcar.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
-                <div class="footer-column">
+                <div class="footer-column loading">
                     <h3>Links Rápidos</h3>
                     <ul class="footer-links">
                         <li><a href="#features">Funcionalidades</a></li>
@@ -658,7 +834,7 @@
                         <li><a href="#download">Download</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
+                <div class="footer-column loading">
                     <h3>Suporte</h3>
                     <ul class="footer-links">
                         <li><a href="#">Central de Ajuda</a></li>
@@ -667,7 +843,7 @@
                         <li><a href="#">Termos de Uso</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
+                <div class="footer-column loading">
                     <h3>Contato</h3>
                     <ul class="footer-links">
                         <li><i class="fas fa-envelope"></i> contato@canadescomplicada.com</li>
@@ -682,11 +858,29 @@
         </div>
     </footer>
 
+    <!-- Back to Top Button -->
+    <button class="back-to-top" aria-label="Voltar ao topo">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
     <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        // Mobile menu functionality
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileNav = document.querySelector('.mobile-nav');
+
+        mobileMenu.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            mobileMenu.innerHTML = mobileNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                mobileMenu.innerHTML = '<i class="fas fa-bars"></i>';
+            });
         });
 
         // Smooth scrolling for anchor links
@@ -703,14 +897,61 @@
             });
         });
 
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
-                    document.querySelector('.nav-links').style.display = 'none';
+        // Back to top button
+        const backToTopButton = document.querySelector('.back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Loading animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('loaded');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with loading class
+        document.querySelectorAll('.loading').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Initial load animation
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.loading').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight) {
+                    el.classList.add('loaded');
                 }
             });
         });
+
+        // Touch device detection
+        function isTouchDevice() {
+            return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        }
+
+        // Add touch class to body for CSS adjustments
+        if (isTouchDevice()) {
+            document.body.classList.add('touch-device');
+        }
     </script>
 </body>
 </html>
